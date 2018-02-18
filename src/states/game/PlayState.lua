@@ -33,8 +33,12 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    -- testing to make sure that we are transitioning into the play state
+    love.graphics.setFont(smallFont)
+    love.graphics.printf('Play State', 0, 100, VIRTUAL_WIDTH, 'center')
+
     -- TODO: render player
-    
+
     -- TODO: render aliens
 
     -- TODO: render projectiles

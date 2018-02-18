@@ -81,6 +81,14 @@ function love.resize(w, h)
     push:resize(w, h)
 end
 
+--[[
+    Custom function to extend LÖVE's input handling; returns whether a given
+    key was set to true in our input table this frame.
+]]
+function love.keyboard.wasPressed(key)
+    return love.keyboard.keysPressed[key]
+end
+
 function love.keypressed(key)
     -- add to our table of keys pressed this frame
     love.keyboard.keysPressed[key] = true
@@ -91,7 +99,7 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    --gStateMachine:update(dt)
+    gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
 end

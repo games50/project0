@@ -22,9 +22,18 @@ function TitleScreenState:enter(params)
 end
 
 function TitleScreenState:update(dt)
-    -- TODO
+    -- transition to play when enter/return are pressed
+    --print("checking keys")
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        print("enter pressed")
+        gStateMachine:change('play')
+    end
 end
 
 function TitleScreenState:render()
-    -- TODO
+    love.graphics.setFont(smallFont)
+    love.graphics.printf('Space Invaders', 0, 64, VIRTUAL_WIDTH, 'center')
+
+    love.graphics.setFont(smallFont)
+    love.graphics.printf('Press Enter', 0, 100, VIRTUAL_WIDTH, 'center')
 end
