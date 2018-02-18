@@ -17,6 +17,8 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     -- TODO: set up Player, projectiles, and other needed variables
     self.player = Player()
+    self.aliens = {}
+    self.projectiles = {}
 end
 
 function PlayState:enter(params)
@@ -24,7 +26,7 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    -- TODO: update player
+    self.player:update(dt,self.projectiles)
 
     -- TODO: update aliens
 
@@ -35,8 +37,8 @@ end
 
 function PlayState:render()
     -- testing to make sure that we are transitioning into the play state
-    love.graphics.setFont(smallFont)
-    love.graphics.printf('Play State', 0, 100, VIRTUAL_WIDTH, 'center')
+    --love.graphics.setFont(smallFont)
+    --love.graphics.printf('Play State', 0, 100, VIRTUAL_WIDTH, 'center')
 
     self.player:render()
 
