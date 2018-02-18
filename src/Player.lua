@@ -16,7 +16,23 @@
 Player = Class{}
 
 function Player:init()
-    -- TODO: initialize player dimensions
+    -- x is placed in the middle
+    self.x = VIRTUAL_WIDTH / 2 - 32
+
+    -- y is placed a little above the bottom edge of the screen
+    self.y = VIRTUAL_HEIGHT - 32
+
+    -- start us off with no velocity
+    self.dx = 0
+    self.dy = 0
+
+    -- starting dimensions
+    self.width = 16
+    self.height = 16
+
+    -- the skin only has the effect of changing our color, used to offset us
+    -- into the gPaddleSkins table later
+    self.skin = gTextures['ship']
 end
 
 function Player:update(dt, projectiles)
@@ -25,5 +41,5 @@ function Player:update(dt, projectiles)
 end
 
 function Player:render()
-    -- TODO: render Player
+    love.graphics.draw(gTextures['ship'],self.x, self.y)
 end

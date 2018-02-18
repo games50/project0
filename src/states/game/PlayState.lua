@@ -16,6 +16,7 @@ PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
     -- TODO: set up Player, projectiles, and other needed variables
+    self.player = Player()
 end
 
 function PlayState:enter(params)
@@ -37,7 +38,7 @@ function PlayState:render()
     love.graphics.setFont(smallFont)
     love.graphics.printf('Play State', 0, 100, VIRTUAL_WIDTH, 'center')
 
-    -- TODO: render player
+    self.player:render()
 
     -- TODO: render aliens
 
