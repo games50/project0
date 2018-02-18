@@ -68,9 +68,15 @@ function Player:update(dt, projectiles)
         self.y = 0
     end
 
+    -- if spacebar create a projectile going up from the ship
+    if love.keyboard.isDown('space') then
+        projectiles[#projectiles+1]  = Projectile(self.x + PLAYER_WIDTH/2,
+            self.y,'up')
+    end
+
     -- pass in projectiles from PlayState so we can add to it
 end
 
 function Player:render()
-    love.graphics.draw(gTextures['ship'],self.x, self.y)
+    love.graphics.draw(self.skin,self.x, self.y)
 end

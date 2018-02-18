@@ -16,16 +16,31 @@
 
 Projectile = Class{}
 
+--  direction should be a string 'up' or 'down'
 function Projectile:init(x, y, direction)
-    -- TODO
-    -- direction should be whether the bullet is traveling up or down
+    self.x = x
+    self.y = y
+
+    -- for future use
+    self.dx = 0
+    if direction == 'down' then
+        self.dy = PROJECTILE_SPEED
+    elseif direction == 'up' then
+        self.dy = -PROJECTILE_SPEED
+    end
+
+    self.skin = gTextures['projectile']
+
+
 end
 
 function Projectile:update(dt)
-    -- TODO
+    self.x = self.x + self.dx
+    self.y = self.y + self.dy
 end
 
 function Projectile:render()
     -- TODO: render logic
     -- maybe a rectangle is enough?
+    love.graphics.draw(self.skin,self.x, self.y)
 end

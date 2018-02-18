@@ -31,6 +31,9 @@ function PlayState:update(dt)
     -- TODO: update aliens
 
     -- TODO: update all projectiles
+    for k, projectile in pairs(self.projectiles) do
+        projectile:update()
+    end
 
     -- TODO: check collisions between projectiles, player, and aliens
 end
@@ -44,7 +47,9 @@ function PlayState:render()
 
     -- TODO: render aliens
 
-    -- TODO: render projectiles
+    for k, projectile in pairs(self.projectiles) do
+        projectile:render()
+    end
 
     -- TODO: render UI text
 end

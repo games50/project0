@@ -48,7 +48,8 @@ function love.load()
     -- load up the graphics we'll be using throughout our states
     gTextures = {
         ['main'] = love.graphics.newImage('graphics/sprites.png'),
-        ['ship'] = love.graphics.newImage('graphics/ship.png')
+        ['ship'] = love.graphics.newImage('graphics/ship.png'),
+        ['projectile'] = love.graphics.newImage('graphics/projectile.png')
     }
 
     -- Quads we will generate for all of our textures; Quads allow us
