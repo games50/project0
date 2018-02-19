@@ -26,7 +26,7 @@ function TitleScreenState:update(dt)
     --print("checking keys")
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         print("enter pressed")
-        gStateMachine:change('play')
+        gStateMachine:change('play',{level = 1})
     end
 end
 

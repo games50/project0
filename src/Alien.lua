@@ -14,16 +14,35 @@
 
 Alien = Class{}
 
+-- skin is an int that corresponds to a quad table
 function Alien:init(skin, x, y)
     -- TODO
-    -- skin should be an int that indexes into a Quad table
+    self.skin = skin
+    self.x = x
+    self.y = y
+    self.inPlay = true
+
+    -- tracks the total dt since last shot.
+    self.timeSinceShot = math.random(1,9)
+    self.timeSinceMove = 0
+
 end
 
 function Alien:update(dt, projectiles)
-    -- TODO: firing logic
-    -- pass in projectiles from PlayState so we can add to it
+    self.timeSinceShot = self.timeSinceShot + dt
+    if self.timeSinceShot >= 10 then
+        --fire
+        projectiles[#projectiles+1] = Projectile(self.x + ALIEN_WIDTH/2, self.y + ALIEN_HEIGHT,
+          'down')
+        self.timeSinceShot = 0
+    end
+
+    -- Alien movement
+
 end
 
 function Alien:render()
-    -- TODO
+    if self.inPlay then
+        love.graphics.draw(gTextures['main'], gFrames['aliens'][self.skin],self.x, self.y)
+    end
 end

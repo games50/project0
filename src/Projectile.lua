@@ -31,6 +31,7 @@ function Projectile:init(x, y, direction)
 
     self.skin = gTextures['projectile']
 
+    self.inPlay = true
 
 end
 
@@ -42,5 +43,19 @@ end
 function Projectile:render()
     -- TODO: render logic
     -- maybe a rectangle is enough?
-    love.graphics.draw(self.skin,self.x, self.y)
+    if self.inPlay then
+        love.graphics.draw(self.skin,self.x, self.y)
+    end
+end
+
+
+-- checks if the projectile collides with an unknown object
+function Projectile:collides(x,y,width,height)
+    if self.x <= (x + width) and
+      (self.x + PROJECTILE_WIDTH) >= x and
+      (self.y + PROJECTILE_HEIGHT) >= y and
+      self.y <= (y + height) then
+        return true
+    else return false
+    end
 end

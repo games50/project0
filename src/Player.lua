@@ -72,9 +72,9 @@ function Player:update(dt, projectiles)
     if love.keyboard.isDown('space') then
         projectiles[#projectiles+1]  = Projectile(self.x + PLAYER_WIDTH/2,
             self.y,'up')
+        love.audio.play(sounds['fire'])
     end
 
-    -- pass in projectiles from PlayState so we can add to it
 end
 
 function Player:render()
