@@ -35,6 +35,7 @@ function love.load()
 
     -- initialize the included font
     smallFont = love.graphics.newFont('fonts/font.ttf', 8)
+    largeFont = love.graphics.newFont('fonts/font.ttf', 32)
     love.graphics.setFont(smallFont)
 
     -- initialize our table of sounds

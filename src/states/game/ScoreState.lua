@@ -35,7 +35,11 @@ function ScoreState:render()
     local highScoreString = 'HIGH SCORE: ' .. self.highScore
     local yourScoreString = 'YOUR SCORE: ' .. self.playerScore
 
+    love.graphics.setFont(largeFont)
+    love.graphics.printf('GAME OVER', 0, 40, VIRTUAL_WIDTH, 'center')
+
     love.graphics.setFont(smallFont)
+
     love.graphics.printf(highScoreString, 0, 80, VIRTUAL_WIDTH, 'center')
     love.graphics.printf(yourScoreString, 0, 100, VIRTUAL_WIDTH, 'center')
 end
