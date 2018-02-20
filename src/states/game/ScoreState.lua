@@ -18,7 +18,13 @@
 ScoreState = Class{__includes = BaseState}
 
 function ScoreState:enter(params)
-    -- TODO
+    self.playerScore = params.player_score
+    self.highScore = params.high_score
+    if self.playerScore > self.highScore then
+        self.highScore = self.playerScore
+    end
+    self:writeHighScore()
+
 end
 
 function ScoreState:update(dt)
@@ -26,5 +32,19 @@ function ScoreState:update(dt)
 end
 
 function ScoreState:render()
-    -- TODO
+    local highScoreString = 'HIGH SCORE: ' .. self.highScore
+    local yourScoreString = 'YOUR SCORE: ' .. self.playerScore
+
+    love.graphics.setFont(smallFont)
+    love.graphics.printf(highScoreString, 0, 80, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(yourScoreString, 0, 100, VIRTUAL_WIDTH, 'center')
+end
+
+--[[
+    Writes high score to disk
+]]
+function ScoreState:writeHighScore()
+    love.filesystem.setIdentity('space_invaders')
+
+    love.filesystem.write('space_invaders.score', tostring(self.highScore))
 end

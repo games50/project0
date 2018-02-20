@@ -30,7 +30,7 @@ end
 
 function Alien:update(dt, projectiles)
     self.timeSinceShot = self.timeSinceShot + dt
-    if self.timeSinceShot >= 10 then
+    if self.timeSinceShot >= 3 then
         --fire
         projectiles[#projectiles+1] = Projectile(self.x + ALIEN_WIDTH/2, self.y + ALIEN_HEIGHT,
           'down')

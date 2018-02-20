@@ -72,7 +72,7 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['score'] = function() return ScoreState() end
     }
-    gStateMachine:change('title')
+    gStateMachine:change('title',{ score = getHighScore()})
 
     -- initialize input table
     love.keyboard.keysPressed = {}
@@ -118,5 +118,18 @@ end
     Loads high score from a file on disk.
 ]]
 function getHighScore()
-    -- TODO
+    love.filesystem.setIdentity('space_invaders')
+
+    -- if the file doesn't exist, initialize it with a zero high score
+    if not love.filesystem.exists('space_invaders.score') then
+        love.filesystem.write('space_invaders.score', '0')
+    end
+
+    local scores = {}
+    -- read in score from file
+    for line in love.filesystem.lines('space_invaders.score') do
+        table.insert(scores,line)
+    end
+    local score = tonumber(scores[1])
+    return score
 end

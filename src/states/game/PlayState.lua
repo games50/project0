@@ -19,13 +19,15 @@ function PlayState:init()
     self.player = Player()
     self.aliens = {}
     self.projectiles = {}
+    self.lives = 3
+    self.playerScore = 0
 
 end
 
 function PlayState:enter(params)
-    -- TODO
     --if params
     self.level = params.level
+    self.highScore = params.high_score
 
     -- initial left or right movement is random
     if math.random(0,1) == 1 then
@@ -84,6 +86,12 @@ function PlayState:render()
     end
 
     -- TODO: render UI text
+    local playerScoreString = 'PLAYER SCORE: ' .. self.playerScore
+    local highScoreString = 'HIGH SCORE: ' .. self.highScore
+
+    love.graphics.setFont(smallFont)
+    love.graphics.printf(playerScoreString, 0, 0, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf(highScoreString, 0, 0, VIRTUAL_WIDTH, 'right')
 end
 
 -- generates the aliens
@@ -121,6 +129,7 @@ function PlayState:projectilesAliensCollide(projectiles,aliens)
                     love.audio.play(sounds['explosion'])
                     alien.inPlay = false
                     projectile.inPlay = false
+                    self.playerScore = self.playerScore + 1
                 end
             end
         end
@@ -133,8 +142,9 @@ function PlayState:projectilesPlayerCollide(projectiles,player)
         --check for collisions if both in play
         if projectile.inPlay then
             if projectile:collides(player.x,player.y,PLAYER_WIDTH,PLAYER_HEIGHT) then
-                love.audio.play(sounds['death'])
+
                 projectile.inPlay = false
+                self:loseLife()
             end
         end
     end
@@ -169,5 +179,14 @@ function PlayState:updateAliensPositions(dt,aliens,dx)
         print("reversing alien direction")
         return -dx
     else return dx
+    end
+end
+
+function PlayState:loseLife()
+    love.audio.play(sounds['death'])
+    self.lives = self.lives - 1
+    if self.lives == 0 then
+        gStateMachine:change('score',{player_score = self.playerScore,
+            high_score = self.highScore})
     end
 end
