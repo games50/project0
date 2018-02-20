@@ -63,6 +63,9 @@ function PlayState:update(dt)
     --check for projectile player collisions
     self:projectilesPlayerCollide(self.projectiles,self.player)
 
+    --check for alien player collisions
+    self:aliensPlayerCollide(self.aliens,self.player)
+
     -- TODO check for player alien collisions
 
     --  update alien positions
@@ -88,9 +91,11 @@ function PlayState:render()
     -- TODO: render UI text
     local playerScoreString = 'PLAYER SCORE: ' .. self.playerScore
     local highScoreString = 'HIGH SCORE: ' .. self.highScore
+    local livesString = 'LIVES REMAINING: ' .. self.lives
 
     love.graphics.setFont(smallFont)
     love.graphics.printf(playerScoreString, 0, 0, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf(livesString, 0, 0, VIRTUAL_WIDTH, 'center')
     love.graphics.printf(highScoreString, 0, 0, VIRTUAL_WIDTH, 'right')
 end
 
@@ -150,6 +155,21 @@ function PlayState:projectilesPlayerCollide(projectiles,player)
     end
 end
 
+function PlayState:aliensPlayerCollide(aliens,player)
+    -- loop through all aliens
+    for k, alien in pairs(aliens) do
+        --check for collisions if n play
+        if alien.inPlay then
+            if alien:collides(player.x,player.y,PLAYER_WIDTH,PLAYER_HEIGHT) then
+
+                alien.inPlay = false
+                self:loseLife()
+                self:reset()
+            end
+        end
+    end
+end
+
 -- implement the logic to shift aliens left or right, possibly down
 -- I am allowing aliens to possibly go past the wall
 function PlayState:updateAliensPositions(dt,aliens,dx)
@@ -176,7 +196,6 @@ function PlayState:updateAliensPositions(dt,aliens,dx)
             alien.y = alien.y + ALIEN_DOWN_SPEED
         end
         -- reverse the alien direction
-        print("reversing alien direction")
         return -dx
     else return dx
     end
@@ -189,4 +208,10 @@ function PlayState:loseLife()
         gStateMachine:change('score',{player_score = self.playerScore,
             high_score = self.highScore})
     end
+end
+
+-- resets the current level, clears and redraws aliens,
+function PlayState:reset()
+      self.aliens = {}
+      self:addAliens(self.aliens)
 end

@@ -30,7 +30,7 @@ end
 
 function Alien:update(dt, projectiles)
     self.timeSinceShot = self.timeSinceShot + dt
-    if self.timeSinceShot >= 3 then
+    if self.timeSinceShot >= 10 then
         --fire
         projectiles[#projectiles+1] = Projectile(self.x + ALIEN_WIDTH/2, self.y + ALIEN_HEIGHT,
           'down')
@@ -44,5 +44,16 @@ end
 function Alien:render()
     if self.inPlay then
         love.graphics.draw(gTextures['main'], gFrames['aliens'][self.skin],self.x, self.y)
+    end
+end
+
+-- checks if the alien collides with an unknown object
+function Alien:collides(x,y,width,height)
+    if self.x <= (x + width) and
+      (self.x + ALIEN_WIDTH) >= x and
+      (self.y + ALIEN_HEIGHT) >= y and
+      self.y <= (y + height) then
+        return true
+    else return false
     end
 end
