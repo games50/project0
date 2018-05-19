@@ -16,16 +16,46 @@
 
 Projectile = Class{}
 
+--  direction should be a string 'up' or 'down'
 function Projectile:init(x, y, direction)
-    -- TODO
-    -- direction should be whether the bullet is traveling up or down
+    self.x = x
+    self.y = y
+
+    -- for future use
+    self.dx = 0
+    if direction == 'down' then
+        self.dy = PROJECTILE_SPEED
+    elseif direction == 'up' then
+        self.dy = -PROJECTILE_SPEED
+    end
+
+    self.skin = gTextures['projectile']
+
+    self.inPlay = true
+
 end
 
 function Projectile:update(dt)
-    -- TODO
+    self.x = self.x + self.dx
+    self.y = self.y + self.dy
 end
 
 function Projectile:render()
     -- TODO: render logic
     -- maybe a rectangle is enough?
+    if self.inPlay then
+        love.graphics.draw(self.skin,self.x, self.y)
+    end
+end
+
+
+-- checks if the projectile collides with an unknown object
+function Projectile:collides(x,y,width,height)
+    if self.x <= (x + width) and
+      (self.x + PROJECTILE_WIDTH) >= x and
+      (self.y + PROJECTILE_HEIGHT) >= y and
+      self.y <= (y + height) then
+        return true
+    else return false
+    end
 end

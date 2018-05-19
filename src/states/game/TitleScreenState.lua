@@ -14,17 +14,31 @@
 TitleScreenState = Class{__includes = BaseState}
 
 function TitleScreenState:init()
-    -- TODO
+     -- TODO ?
 end
 
 function TitleScreenState:enter(params)
-    -- TODO
+    self.highScore = params.score
 end
 
 function TitleScreenState:update(dt)
-    -- TODO
+    -- transition to play when enter/return are pressed
+    --print("checking keys")
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        print("enter pressed")
+        gStateMachine:change('play',{level = 1, high_score = self.highScore})
+    end
 end
 
 function TitleScreenState:render()
-    -- TODO
+    love.graphics.setFont(smallFont)
+    love.graphics.printf('Space Invaders', 0, 64, VIRTUAL_WIDTH, 'center')
+
+    local highScoreString = 'HIGH SCORE: ' .. self.highScore
+
+    love.graphics.setFont(smallFont)
+    love.graphics.printf(highScoreString, 0, 80, VIRTUAL_WIDTH, 'center')
+
+    love.graphics.setFont(smallFont)
+    love.graphics.printf('Press Enter', 0, 100, VIRTUAL_WIDTH, 'center')
 end
